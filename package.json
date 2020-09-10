@@ -1,0 +1,14 @@
+{
+  "name": "nws2mqtt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nws.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-mqtt": "^2.6.1"
+  }
+}
