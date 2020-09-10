@@ -1,41 +1,43 @@
+const fs = require('fs');
 const mqtt = require('async-mqtt');
 const https = require('https');
 
 var args = process.argv.slice(2);
 
-if ( args.length != 3 ){
-	console.log("Usage: node nws.js {locationId} {latitude} {longitude}");
+if ( args.length != 1 ){
+	console.log("Usage: node nws.js {configFilePath}");
 	process.exit(1);
 }
 
-const locationId = args[0]; // kmle
-const lat = args[1]; // '41.2';
-const lon = args[2]; //'-96.11';
+const config = JSON.parse(fs.readFileSync(args[0], 'utf8'));
 
 run();
 
 async function run(){
 
-	const weather = await getReport(lat, lon);
-	const obs = parseObservations(weather);
-
-	const client = await mqtt.connectAsync('mqtt://homebridge');
+	const client = await mqtt.connectAsync(config.mqttUrl, {username: config.mqttUsername, password: config.mqttPassword});
 
 	try{
 
-		for ( key in obs ){
-			//console.log(key + " -> " + obs[key]);
-			await client.publish('nws/' + locationId + '/sensor/' + key, obs[key]);
+		for ( let i = 0; i < config.locations.length; ++i ){
+			let location = config.locations[i];
+
+			const weather = await getReport(location.latitude, location.longitude);
+
+			const obs = parseObservations(weather);
+
+			for ( key in obs ){
+				await client.publish(config.topicPrefix + '/' + location.locationId + '/sensor/' + key, obs[key]);
+			}
+
 		}
 
 		client.end();
-
 	} catch (err){
 		console.log(err);
 		process.exit(2);
 	}
 	
-
 }
 
 function f2c(c){

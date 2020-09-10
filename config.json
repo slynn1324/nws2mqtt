@@ -1,0 +1,14 @@
+{
+	"mqttUrl":"mqtt://homebridge",
+	"mqttUsername":"",
+	"mqttPassword":"",
+	"topicPrefix":"nws",
+	"locations":[
+		{
+			"locationId":"kmle",
+			"latitude":"41.2",
+			"longitude":"-96.11"		
+		}
+	]
+	
+}

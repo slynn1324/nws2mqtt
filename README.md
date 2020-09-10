@@ -7,8 +7,12 @@ Simple scraper for current observations from the NWS Forecast feed (e.g., https:
 npm install
 ```
 
+## Configure
+Edit `config.json` to contain MQTT settings and location(s).
+
+
 ## Usage
 
 ```
-node nws.js stationId latitude longitude
+node nws.js {configFile}
 ```
