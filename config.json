@@ -1,5 +1,5 @@
 {
-	"mqttUrl":"mqtt://homebridge",
+	"mqttUrl":"mqtt://localhost",
 	"mqttUsername":"",
 	"mqttPassword":"",
 	"topicPrefix":"nws",
